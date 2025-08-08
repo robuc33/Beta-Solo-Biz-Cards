@@ -13,6 +13,7 @@ import Pricing from "./pages/Pricing";
 import Earnings from "./pages/Earnings";
 import Opportunities from "./pages/Opportunities";
 import { BusinessCardDisplay } from "./components/BusinessCardDisplay";
+import { LifetimeOfferButton } from "./components/ui/LifetimeOfferButton";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/card/:cardId" element={<BusinessCardDisplay />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <LifetimeOfferButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
