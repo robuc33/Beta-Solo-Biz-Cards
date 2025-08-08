@@ -11,6 +11,7 @@ import { AppointmentForm } from './forms/AppointmentForm';
 import { WelcomeModal } from './WelcomeModal';
 import { generateVCard } from '@/utils/businessCard';
 import { saveBusinessCard, isUrlNameAvailable, generateUniqueUrlName } from '@/utils/cardStorage';
+import { hasUserAccount } from '@/utils/userStorage';
 import { Image, Contact2, Save, LayoutGrid, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -78,11 +79,19 @@ export function BusinessCardForm({
       description: isEditMode ? "Card updated successfully" : "Card saved successfully",
     });
 
-    // Show welcome modal for new cards, navigate directly for edits
+    // Show welcome modal for new cards, navigate directly for edits or existing users
     if (isEditMode) {
       navigate('/dashboard/cards');
     } else {
-      setShowWelcomeModal(true);
+      // Check if user already has an account (email present)
+      const userAlreadyExists = hasUserAccount();
+      if (userAlreadyExists) {
+        // User is already logged in, skip welcome modal and go to dashboard
+        navigate('/dashboard/cards');
+      } else {
+        // New user, show welcome modal
+        setShowWelcomeModal(true);
+      }
     }
   };
 
@@ -125,7 +134,7 @@ export function BusinessCardForm({
 
         // Add footer with website URL
         ctx.fillStyle = '#666666';
-        ctx.font = '14px Arial, sans-serif';
+        ctx.font = '18px Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(
           'https://solobizcards.com',
