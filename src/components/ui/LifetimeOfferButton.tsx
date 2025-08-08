@@ -7,7 +7,7 @@ export function LifetimeOfferButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGetOffer = () => {
-    window.open('https://dnvdecks.com', '_blank');
+    window.open('https://www.paypal.com/ncp/payment/W4LS3EFGWNQCS', '_blank');
     setIsOpen(false);
   };
 
@@ -40,7 +40,7 @@ export function LifetimeOfferButton() {
             
             <p className="text-center">
               Enjoy unlimited access and exclusive features—forever—with a single payment of{' '}
-              <span className="font-bold text-green-600 text-xl">$99</span>.
+              <span className="font-bold text-green-600 text-xl">$99, for 2-Cards</span>.
             </p>
             
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
@@ -64,7 +64,7 @@ export function LifetimeOfferButton() {
             </div>
             
             <p className="text-center font-medium">
-              Join now and start getting more from your network.
+              Join us and start getting more from your network. Your support will help us complete final phase of this project [the backend development]. Estimated completion in 2-months. Our proposed Launch Date is Oct. 1st. 2025.
             </p>
           </div>
           
