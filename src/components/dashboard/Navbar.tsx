@@ -8,6 +8,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb";
 import { loadBusinessCards } from '@/utils/cardStorage';
 import { getFullName } from '@/utils/businessCard';
+import { loadUserData, hasUserAccount } from '@/utils/userStorage';
+import { useState, useEffect } from 'react';
 export function Navbar({
   collapsed,
   setMobileOpen
@@ -19,6 +21,37 @@ export function Navbar({
   const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
+
+  // User data state
+  const [userDisplayName, setUserDisplayName] = useState('User');
+  const [userEmail, setUserEmail] = useState('user@example.com');
+  const [userInitials, setUserInitials] = useState('U');
+
+  // Load user data on component mount
+  useEffect(() => {
+    const loadUserInfo = () => {
+      if (hasUserAccount()) {
+        const userData = loadUserData();
+        if (userData) {
+          setUserDisplayName(userData.firstName);
+          setUserEmail(userData.email);
+          setUserInitials(userData.firstName.charAt(0).toUpperCase());
+        }
+      } else {
+        // Fallback to business card data if no user account
+        const cards = loadBusinessCards();
+        if (cards.length > 0) {
+          const firstCard = cards[0];
+          const fullName = getFullName(firstCard);
+          setUserDisplayName(fullName);
+          setUserEmail(firstCard.business?.email || 'user@example.com');
+          setUserInitials(firstCard.profile.firstName.charAt(0).toUpperCase() + (firstCard.profile.lastName?.charAt(0).toUpperCase() || ''));
+        }
+      }
+    };
+
+    loadUserInfo();
+  }, []);
 
   // Page title mapping
   const getPageTitle = () => {
@@ -110,11 +143,11 @@ export function Navbar({
             <Button variant="ghost" className="flex items-center gap-2 border border-border rounded-md p-1 sm:p-2 h-full" /* Made button inherit full height */>
               <Avatar className="h-7 w-7">
                 <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                <AvatarFallback>JP</AvatarFallback>
+                <AvatarFallback>{userInitials}</AvatarFallback>
               </Avatar>
               <div className="hidden md:flex flex-col items-start">
-                <span className="text-sm font-medium">John Doe</span>
-                <span className="text-xs text-muted-foreground">john@example.com</span>
+                <span className="text-sm font-medium">{userDisplayName}</span>
+                <span className="text-xs text-muted-foreground">{userEmail}</span>
               </div>
               <ChevronDown className="h-4 w-4 ml-0 md:ml-1 shrink-0" />
             </Button>

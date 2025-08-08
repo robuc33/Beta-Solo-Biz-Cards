@@ -8,6 +8,7 @@ import { BusinessForm } from './forms/BusinessForm';
 import { SocialForm } from './forms/SocialForm';
 import { AboutForm } from './forms/AboutForm';
 import { AppointmentForm } from './forms/AppointmentForm';
+import { WelcomeModal } from './WelcomeModal';
 import { generateVCard } from '@/utils/businessCard';
 import { saveBusinessCard, isUrlNameAvailable, generateUniqueUrlName } from '@/utils/cardStorage';
 import { Image, Contact2, Save, LayoutGrid, Download } from 'lucide-react';
@@ -26,6 +27,7 @@ export function BusinessCardForm({
 }: BusinessCardFormProps) {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 
 
   const handleSave = () => {
@@ -76,7 +78,12 @@ export function BusinessCardForm({
       description: isEditMode ? "Card updated successfully" : "Card saved successfully",
     });
 
-    navigate('/dashboard/cards');
+    // Show welcome modal for new cards, navigate directly for edits
+    if (isEditMode) {
+      navigate('/dashboard/cards');
+    } else {
+      setShowWelcomeModal(true);
+    }
   };
 
   const handleDownloadImage = async () => {
@@ -100,9 +107,36 @@ export function BusinessCardForm({
         backgroundColor: '#ffffff'
       });
 
+      // Create a new canvas with extra space for the footer
+      const finalCanvas = document.createElement('canvas');
+      const ctx = finalCanvas.getContext('2d');
+      const footerHeight = 40; // Height for the footer
+      
+      finalCanvas.width = canvas.width;
+      finalCanvas.height = canvas.height + footerHeight;
+
+      if (ctx) {
+        // Fill background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+
+        // Draw the original card image
+        ctx.drawImage(canvas, 0, 0);
+
+        // Add footer with website URL
+        ctx.fillStyle = '#666666';
+        ctx.font = '14px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(
+          'https://solobizcards.com',
+          finalCanvas.width / 2,
+          canvas.height + (footerHeight / 2) + 5
+        );
+      }
+
       const link = document.createElement('a');
       link.download = `${card.urlName || 'business-card'}.png`;
-      link.href = canvas.toDataURL('image/png');
+      link.href = finalCanvas.toDataURL('image/png');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -110,7 +144,7 @@ export function BusinessCardForm({
 
       toast({
         title: "Success!",
-        description: "Business card image downloaded",
+        description: "Business card image downloaded with website URL",
       });
     } catch (error) {
       console.error('Error generating image:', error);
@@ -141,7 +175,8 @@ export function BusinessCardForm({
   };
 
   return (
-    <Card className="w-full max-w-2xl">
+    <>
+      <Card className="w-full max-w-2xl">
       <CardHeader>
         <CardTitle className="text-xl sm:text-2xl">
           {isEditMode ? 'Edit Your Business Card' : 'Create Your Business Card'}
@@ -210,5 +245,13 @@ export function BusinessCardForm({
         </div>
       </CardContent>
     </Card>
+
+      {/* Welcome Modal */}
+      <WelcomeModal
+        isOpen={showWelcomeModal}
+        onClose={() => setShowWelcomeModal(false)}
+        firstName={card.profile.firstName || ''}
+      />
+    </>
   );
 }

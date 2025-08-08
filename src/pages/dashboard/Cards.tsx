@@ -10,6 +10,9 @@ import { CardList } from '@/components/dashboard/card-list';
 import { EmptyState } from '@/components/dashboard/EmptyState';
 import { loadBusinessCards, deleteBusinessCard, toggleCardFavorite } from '@/utils/cardStorage';
 import { filterFavorites, filterPublicCards } from '@/utils/cardFilters';
+import { hasUserAccount, loadUserData } from '@/utils/userStorage';
+import { CreateCardPromptModal } from '@/components/dashboard/CreateCardPromptModal';
+import { WelcomeModal } from '@/components/onboarding/WelcomeModal';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,11 +32,52 @@ export default function Cards() {
   const [activeTab, setActiveTab] = useState('local');
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [cardToDelete, setCardToDelete] = useState<BusinessCard | null>(null);
+  
+  // Access control states
+  const [showCreateCardModal, setShowCreateCardModal] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+  const [welcomeFirstName, setWelcomeFirstName] = useState('');
+  const [isAccessControlChecked, setIsAccessControlChecked] = useState(false);
 
   // Load cards on component mount
   useEffect(() => {
     const loadedCards = loadBusinessCards();
     setCards(loadedCards);
+  }, []);
+
+  // Access control logic
+  useEffect(() => {
+    const checkAccess = () => {
+      const loadedCards = loadBusinessCards();
+      const userHasAccount = hasUserAccount();
+      
+      console.log('Access control check:', { 
+        cardsCount: loadedCards.length, 
+        hasAccount: userHasAccount 
+      });
+
+      // Scenario A: No business cards + No user data
+      if (loadedCards.length === 0 && !userHasAccount) {
+        setShowCreateCardModal(true);
+        setIsAccessControlChecked(true);
+        return;
+      }
+
+      // Scenario B: Business cards exist + No user data
+      if (loadedCards.length > 0 && !userHasAccount) {
+        // Get the first name from the first card for the welcome modal
+        const firstName = loadedCards[0]?.profile?.firstName || 'User';
+        setWelcomeFirstName(firstName);
+        setShowWelcomeModal(true);
+        setIsAccessControlChecked(true);
+        return;
+      }
+
+      // Scenario C: Both exist - allow normal access
+      setIsAccessControlChecked(true);
+    };
+
+    checkAccess();
   }, []);
 
   // Filter cards when dependencies change
@@ -97,7 +141,31 @@ export default function Cards() {
     setCardToDelete(null);
   };
 
-  if (cards.length === 0) {
+  // Don't render main content until access control is checked
+  if (!isAccessControlChecked) {
+    return (
+      <>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-gray-500">Loading...</div>
+        </div>
+        
+        {/* Access Control Modals */}
+        <CreateCardPromptModal 
+          isOpen={showCreateCardModal} 
+          onClose={() => setShowCreateCardModal(false)} 
+        />
+        
+        <WelcomeModal 
+          isOpen={showWelcomeModal} 
+          onClose={() => setShowWelcomeModal(false)}
+          firstName={welcomeFirstName}
+        />
+      </>
+    );
+  }
+
+  // Show EmptyState only if access control passed and no cards exist
+  if (cards.length === 0 && !showCreateCardModal && !showWelcomeModal) {
     return <EmptyState onCreateCard={handleCreateCard} />;
   }
 
@@ -202,6 +270,18 @@ export default function Cards() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Access Control Modals */}
+      <CreateCardPromptModal 
+        isOpen={showCreateCardModal} 
+        onClose={() => setShowCreateCardModal(false)} 
+      />
+      
+      <WelcomeModal 
+        isOpen={showWelcomeModal} 
+        onClose={() => setShowWelcomeModal(false)}
+        firstName={welcomeFirstName}
+      />
     </div>
   );
 }

@@ -4,6 +4,9 @@ import { cn } from "@/lib/utils";
 import { LayoutDashboard, CreditCard, Users, Contact, Shirt, Settings, HelpCircle, Boxes, LogOut, MessageCircle, X, DollarSign } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { loadUserData, hasUserAccount } from '@/utils/userStorage';
+import { loadBusinessCards } from '@/utils/cardStorage';
+import { useState, useEffect } from 'react';
 type SidebarItem = {
   title: string;
   icon: React.ElementType;
@@ -59,6 +62,32 @@ export function Sidebar({
   setMobileOpen: (val: boolean) => void;
 }) {
   const location = useLocation();
+  const [userEmail, setUserEmail] = useState('');
+
+  // Load user email on component mount
+  useEffect(() => {
+    const loadUserEmail = () => {
+      if (hasUserAccount()) {
+        const userData = loadUserData();
+        if (userData) {
+          setUserEmail(userData.email);
+        }
+      } else {
+        // Fallback to business card data if no user account
+        const cards = loadBusinessCards();
+        if (cards.length > 0) {
+          const firstCard = cards[0];
+          setUserEmail(firstCard.business?.email || '');
+        }
+      }
+    };
+
+    loadUserEmail();
+  }, []);
+
+  // Check if user is admin (robuc33@yahoo.com)
+  const isAdmin = userEmail === 'robuc33@yahoo.com';
+
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
@@ -118,17 +147,25 @@ export function Sidebar({
 
         <div className="flex-1 border-b border-blue-200 mt-2 mb-2 mx-4"></div>
 
-        {bottomNavItems.map(item => <Link key={item.title} to={item.path} className={cn("sidebar-item hover:bg-[#3b73ed] transition-all duration-300", 
-          // Apply darker blue when active and maintain hover color
-          location.pathname === item.path ? "bg-[#1d4ed8]" : "",
-          // Desktop styles for collapsed state
-          collapsed ? "md:justify-center md:px-2" : "px-4",
-          // Mobile always shows full size
-          "mx-4")} onClick={() => setMobileOpen(false)}>
-            <item.icon className="w-5 h-5 text-[#f7faff]" />
-            {/* Only show the text when not collapsed or on mobile */}
-            {(!collapsed || mobileOpen) && <span className="text-[#f7faff] transition-opacity duration-300">{item.title}</span>}
-          </Link>)}
+        {bottomNavItems
+          .filter(item => {
+            // Hide Systems button if user is not admin
+            if (item.title === 'Systems' && !isAdmin) {
+              return false;
+            }
+            return true;
+          })
+          .map(item => <Link key={item.title} to={item.path} className={cn("sidebar-item hover:bg-[#3b73ed] transition-all duration-300", 
+            // Apply darker blue when active and maintain hover color
+            location.pathname === item.path ? "bg-[#1d4ed8]" : "",
+            // Desktop styles for collapsed state
+            collapsed ? "md:justify-center md:px-2" : "px-4",
+            // Mobile always shows full size
+            "mx-4")} onClick={() => setMobileOpen(false)}>
+              <item.icon className="w-5 h-5 text-[#f7faff]" />
+              {/* Only show the text when not collapsed or on mobile */}
+              {(!collapsed || mobileOpen) && <span className="text-[#f7faff] transition-opacity duration-300">{item.title}</span>}
+            </Link>)}
       </div>
 
       <div className="border-t border-blue-200 mx-0 py-[16px] my-0">
