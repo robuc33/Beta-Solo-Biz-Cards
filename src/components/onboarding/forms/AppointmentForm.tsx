@@ -145,17 +145,17 @@ export function AppointmentForm({ card, onUpdate }: FormComponentProps) {
           <div className="space-y-2">
             <Label htmlFor="calendlyUrl" className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              Calendly URL (Meeting Scheduler)
+              Calendly or Google Calendar URL (Meeting Scheduler)
             </Label>
             <Input
               id="calendlyUrl"
               type="url"
-              placeholder="https://calendly.com/your-username"
+              placeholder="https://calendly.com/your-username or Google Calendar link"
               value={card.appointments.calendlyUrl || ''}
               onChange={(e) => handleInputChange('calendlyUrl', e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              If you have a Calendly account, paste your scheduling link here.
+              If you have a Calendly or Google Calendar scheduling link, paste it here.
             </p>
           </div>
         </div>
@@ -194,11 +194,11 @@ export function AppointmentForm({ card, onUpdate }: FormComponentProps) {
           <div className="space-y-2">
             <Label>Direct Ads Type</Label>
             <Select
-              value={card.appointments.directAds?.type || 'Product'}
+              value={card.appointments.directAds?.type || ''}
               onValueChange={(value) => handleDirectAdsChange('type', value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select ad type" />
+                <SelectValue placeholder="Select One" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Product">Product</SelectItem>
@@ -274,53 +274,6 @@ export function AppointmentForm({ card, onUpdate }: FormComponentProps) {
             </div>
           </div>
 
-          {/* Additional Fields for Direct Ads */}
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="adTitle">Title</Label>
-              <Input
-                id="adTitle"
-                placeholder="Enter title for your ad"
-                value={card.appointments.directAds?.title || ''}
-                onChange={(e) => handleDirectAdsChange('title', e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="adDescription">Description</Label>
-              <Textarea
-                id="adDescription"
-                placeholder="Describe your product, event, or service"
-                value={card.appointments.directAds?.description || ''}
-                onChange={(e) => handleDirectAdsChange('description', e.target.value)}
-                rows={3}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="adPrice">Price (optional)</Label>
-              <Input
-                id="adPrice"
-                placeholder="$99.99"
-                value={card.appointments.directAds?.price || ''}
-                onChange={(e) => handleDirectAdsChange('price', e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="adUrl">Action URL</Label>
-              <Input
-                id="adUrl"
-                type="url"
-                placeholder="https://example.com/product"
-                value={card.appointments.directAds?.url || ''}
-                onChange={(e) => handleDirectAdsChange('url', e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Where users will be directed when they click "Learn More"
-              </p>
-            </div>
-          </div>
         </div>
       )}
     </div>

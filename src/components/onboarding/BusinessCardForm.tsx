@@ -133,11 +133,11 @@ export function BusinessCardForm({
         ctx.drawImage(canvas, 0, 0);
 
         // Add footer with website URL
-        ctx.fillStyle = '#666666';
-        ctx.font = '18px Arial, sans-serif';
+        ctx.fillStyle = 'rgba(102, 102, 102, 0.5)';
+        ctx.font = 'italic 24px Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText(
-          'https://solobizcards.com',
+          'created free by: https://solobizcards.com',
           finalCanvas.width / 2,
           canvas.height + (footerHeight / 2) + 5
         );
