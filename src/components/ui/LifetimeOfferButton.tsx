@@ -7,7 +7,7 @@ export function LifetimeOfferButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGetOffer = () => {
-    window.open('https://www.paypal.com/ncp/payment/W4LS3EFGWNQCS', '_blank');
+    window.open('https://www.paypal.com/donate?campaign_id=6XF6U5KNSYY9G', '_blank');
     setIsOpen(false);
   };
 

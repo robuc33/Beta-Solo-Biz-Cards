@@ -11,6 +11,8 @@ A modern, feature-rich platform for creating and managing digital business cards
 - **QR code generation** for instant sharing
 - **Mobile-responsive design** that looks great on all devices
 - **Real-time preview** during editing
+- **Watermarked image downloads** with professional branding
+- **High-resolution exports** with 2x canvas scaling
 
 ### 📊 Analytics & Tracking
 - **View tracking** and detailed analytics
@@ -31,6 +33,18 @@ A modern, feature-rich platform for creating and managing digital business cards
 - **Pro feature upgrades** with advanced capabilities
 - **Accessories marketplace** for physical products
 - **White-label solutions** for businesses
+- **Lifetime membership offers** with floating promotional system
+- **PayPal integration** for seamless payments
+
+### 🆕 Recent Major Updates
+- **Floating Lifetime Offer Button** - Animated promotional system with lightbox modal
+- **Google Analytics Integration** - GA4 tracking for user behavior and conversions
+- **Enhanced Download Features** - Watermarked business card exports with professional branding
+- **Smart User Experience** - Improved onboarding flow with existing user detection
+- **Simplified CTA Forms** - Streamlined Direct Ads section for better usability
+- **Calendar Integration** - Support for both Calendly and Google Calendar scheduling
+- **EmailJS Integration** - Automated email notifications for new user registrations
+- **Project Timeline Transparency** - Backend development completion information (Oct 1st, 2025)
 
 ## 🛠️ Tech Stack
 

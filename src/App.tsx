@@ -14,6 +14,7 @@ import Earnings from "./pages/Earnings";
 import Opportunities from "./pages/Opportunities";
 import { BusinessCardDisplay } from "./components/BusinessCardDisplay";
 import { LifetimeOfferButton } from "./components/ui/LifetimeOfferButton";
+import { ChatWidget } from "./components/ui/ChatWidget";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         <LifetimeOfferButton />
+        <ChatWidget />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -71,9 +71,11 @@
 - **Download QR Code** - Downloads QR as image
 - **Copy Link** - Copies card URL to clipboard
 - **Save Contact** - Downloads vCard file
-- **Download Image** - Downloads card as PNG
+- **Download Image** - Downloads card as PNG with watermark
 - **Edit Card** - Enters edit mode
 - **Delete Card** - Removes card (destructive)
+- **Limited LIFE-TIME Offer!** - Floating promotional button
+- **Get Offer Now!** - PayPal payment/donation button
 
 ### Navigation Buttons
 - **Back** - Returns to previous page
@@ -225,6 +227,40 @@
 - **Keyboard Navigation** - Accessibility support
 - **Multiple Windows** - Card preview in new tabs
 - **Desktop Notifications** - System alerts
+
+---
+
+## 🆕 Recent Major Updates & Features
+
+### Lifetime Offer Promotion System
+- ✅ **Floating Promotional Button** - Bottom-right corner placement
+- ✅ **Animated Call-to-Action** - Pulsing animation with sparkles icon
+- ✅ **Lightbox Modal** - Professional popup with offer details
+- ✅ **PayPal Integration** - Direct payment/donation processing
+- ✅ **Project Timeline Information** - Backend development completion details
+
+### Enhanced Download Features
+- ✅ **Watermarked Image Downloads** - "created free by: https://solobizcards.com"
+- ✅ **Customizable Watermark** - 12px italic font with 50% opacity
+- ✅ **High-Resolution Export** - 2x scaling for crisp images
+- ✅ **Professional Branding** - Subtle attribution footer
+
+### User Experience Improvements
+- ✅ **Smart Welcome Modal Logic** - Skips for existing users
+- ✅ **Enhanced CTA Form** - Simplified Direct Ads section
+- ✅ **Calendar Integration** - Support for both Calendly and Google Calendar
+- ✅ **Improved Form Defaults** - "Select One" placeholder for dropdowns
+
+### Analytics & Tracking
+- ✅ **Google Analytics Integration** - GA4 tracking (G-X7HE4JN1ZC)
+- ✅ **User Behavior Tracking** - Page views and interactions
+- ✅ **Conversion Monitoring** - Lifetime offer engagement
+
+### Technical Enhancements
+- ✅ **User Storage System** - Local storage for user data persistence
+- ✅ **Account State Management** - Onboarding completion tracking
+- ✅ **Email Integration Ready** - EmailJS setup for notifications
+- ✅ **Responsive Modal Design** - Mobile-optimized promotional content
 
 ---
 
