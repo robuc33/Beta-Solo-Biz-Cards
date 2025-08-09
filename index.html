@@ -26,6 +26,32 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Chatling Chat Widget -->
+    <script> window.chtlConfig = { chatbotId: "5754379182" } </script>
+    <script async data-id="5754379182" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    
+    <!-- Custom CSS to position chat widget above lifetime offer button -->
+    <style>
+      /* Position Chatling chat widget above the lifetime offer button */
+      #chtl-chat-widget {
+        bottom: 120px !important;
+        right: 24px !important;
+        z-index: 40 !important;
+      }
+      
+      /* Ensure proper spacing and prevent overlap */
+      .chtl-chat-button {
+        margin-bottom: 20px !important;
+      }
+      
+      /* Alternative selector for different Chatling versions */
+      [id*="chatling"], [class*="chatling"] {
+        bottom: 120px !important;
+        right: 24px !important;
+        z-index: 40 !important;
+      }
+    </style>
   </head>
 
   <body>
