@@ -11,3 +11,4 @@ export { SliderImagesUpload } from './SliderImagesUpload';
 export { OGWebsiteImageUpload } from './OGWebsiteImageUpload';
 export { ReferralEarningRate } from './ReferralEarningRate';
 export { SoloCardsInAction } from './SoloCardsInAction';
+export { SocialMediaShare } from './SocialMediaShare';

@@ -19,6 +19,7 @@ import {
   OGWebsiteImageUpload,
   ReferralEarningRate,
   SoloCardsInAction,
+  SocialMediaShare,
 } from "@/components/dashboard/systems";
 
 export default function Systems() {
@@ -238,6 +239,7 @@ export default function Systems() {
       {/* System Health and Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 gap-y-4">
         <SystemInfo />
+        <SocialMediaShare />
       </div>
     </div>
   );
