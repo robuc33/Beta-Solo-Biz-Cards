@@ -91,7 +91,7 @@ export default function Accessories() {
         <div className="space-y-4">
           {/* Front Card */}
           <div className="relative">
-            <div className="bg-black rounded-2xl p-6 aspect-[1.6/1] flex items-center justify-center text-white shadow-xl scale-[0.55]">
+            <div className="bg-black rounded-2xl p-11 aspect-[1.6/1] flex items-center justify-center text-white shadow-xl scale-[0.55]">
               {selectedCard === 'essential' && (
                 <div className="flex items-center justify-center gap-6">
                   <img src="/lovable-uploads/bf370590-9076-4ca0-8853-23a471ef1ede.png" alt="Solo Logo" className="w-32 h-32" />
@@ -133,7 +133,7 @@ export default function Accessories() {
 
           {/* Back Card */}
           <div className="relative">
-            <div className="bg-black rounded-2xl p-6 aspect-[1.6/1] flex flex-col justify-between text-white shadow-xl scale-[0.55]">
+            <div className="bg-black rounded-2xl p-11 aspect-[1.6/1] flex flex-col justify-between text-white shadow-xl scale-[0.55]">
               <div className="flex justify-start">
                 <div className="bg-white p-[0.3rem] rounded-lg">
                   <img src="/lovable-uploads/08522d46-e6ac-4f5f-b221-11aa1287eea5.png" alt="QR Code" className="w-24 h-24" />
